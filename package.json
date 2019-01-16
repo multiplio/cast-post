@@ -1,0 +1,40 @@
+{
+  "name": "post",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tekwrks <tekwrks@tekwrks.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "lint": "eslint -c .eslintrc.js ./*.js"
+  },
+  "jest": {
+    "modulePaths" : ["./"],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom" : ["*.js"],
+    "collectCoverage": false,
+    "testRegex": ".*test.js$"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect-mongodb-session": "^2.0.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "helmet": "^3.13.0",
+    "mongoose": "^5.2.3",
+    "node-fetch": "^2.2.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/express-session": "^1.15.11",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^23.6.0"
+  }
+}
