@@ -1,0 +1,16 @@
+sudo: required
+
+language: node_js
+node_js:
+  - '10'
+
+services:
+  - docker
+
+before_script:
+  - yarn
+
+script:
+  - yarn lint
+  - make build
+
