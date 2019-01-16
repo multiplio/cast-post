@@ -1,0 +1,8 @@
+.env
+
+*.log
+
+node_modules/
+coverage/
+
+.image-timestamp
