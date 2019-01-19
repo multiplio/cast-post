@@ -4,10 +4,10 @@ const ipfs = require('ipfs-http-client')(process.env.IPFS_ADDRESS, process.env.I
 
 module.exports = (description, content, fontSize = '12', spacing = '1.5') => new Promise(function (resolve, reject) {
   const postString = JSON.stringify({
-    description
-    content
-    fontSize
-    spacing
+    description,
+    content,
+    fontSize,
+    spacing,
   })
   const buf = Buffer.from(postString, 'utf8')
 

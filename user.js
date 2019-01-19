@@ -14,9 +14,9 @@ module.exports = () => new Promise(function (resolve, reject) {
 
     posts: [
       {
-        hash : String,
-        date : { type: Date, default: Date.now },
-      }
+        hash: String,
+        date: { type: Date, default: Date.now },
+      },
     ],
   })
 

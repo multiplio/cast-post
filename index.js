@@ -60,7 +60,7 @@ require('./sessstore')(session)
               res
                 .status(503)
                 .set({
-                  'Retry-After': '2', //seconds
+                  'Retry-After': '2', // seconds
                 })
                 .send('retry')
             })
