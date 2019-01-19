@@ -10,9 +10,13 @@
     "lint": "eslint -c .eslintrc.js ./*.js"
   },
   "jest": {
-    "modulePaths" : ["./"],
+    "modulePaths": [
+      "./"
+    ],
     "coverageDirectory": "coverage",
-    "collectCoverageFrom" : ["*.js"],
+    "collectCoverageFrom": [
+      "*.js"
+    ],
     "collectCoverage": false,
     "testRegex": ".*test.js$"
   },
@@ -23,6 +27,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "helmet": "^3.13.0",
+    "ipfs-http-client": "^29.0.0",
     "mongoose": "^5.2.3",
     "node-fetch": "^2.2.0",
     "winston": "^3.0.0"
