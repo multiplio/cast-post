@@ -8,27 +8,17 @@ module.exports = () => new Promise(function (resolve, reject) {
   // schema
   let userSchema = mongoose.Schema({
     displayName: String,
-    primaryEmail: String,
-    profileImageUrl: String,
-
-    joinedDate: { type: Date, default: Date.now },
 
     twitterId: String,
     twitterAccessLevel: String,
-  })
 
-  userSchema.statics.findOrCreate = function (user, cb) {
-    return this.model('User').findOneAndUpdate(
-      { twitterId: user.twitterId },
-      user,
+    posts: [
       {
-        new: true,
-        upsert: true,
-        setDefaultsOnInsert: true,
-      },
-      cb
-    )
-  }
+        hash : String,
+        date : { type: Date, default: Date.now },
+      }
+    ],
+  })
 
   mongoose.model('User', userSchema)
   logger.debug('user schema created')
