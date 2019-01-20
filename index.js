@@ -2,15 +2,16 @@ const logger = require('./logger')
 
 // app requires
 const users = require('./user')
-
 const post = require('./post')
 
+const bodyParser = require('body-parser')
 const app = require('express')()
 const session = require('express-session')
 
 app.use(require('helmet')())
 
-app.use(require('body-parser').urlencoded(
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded(
   { extended: true }
 ))
 
@@ -36,20 +37,26 @@ require('./sessstore')(session)
       .then(User => {
         // setup paths
         app.post('/', function (req, res) {
-          if (req === null || req.query === null) {
-            req.status(400).send('ERROR : provide required parameters')
+          if (req === null || req.body === null) {
+            req
+              .status(400)
+              .send('error : provide required parameters')
             return
           }
 
-          const desc = req.query.desc || ''
-          const text = req.query.text || ''
-          const fontSize = req.query.fontSize || '12'
-          const spacing = req.query.spacing || '1.5'
+          const desc = req.body.desc || null
+          const text = req.body.text || null
+          const fontSize = req.body.fontSize || '12'
+          const spacing = req.body.spacing || '1.5'
 
-          logger.debug(`?desc=${desc}&text=${text}&fontSize=${fontSize}&spacing=${spacing}`)
+          logger.debug(`
+            desc=${desc}
+            text=${text}
+            fontSize=${fontSize}
+            spacing=${spacing}`)
 
           post(desc, text, fontSize, spacing)
-            .then(() => logger.debug('post - success'))
+            .then((cid) => logger.info(`post - success : ${cid}`))
             .then(() => {
               res
                 .status(200)

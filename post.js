@@ -17,11 +17,20 @@ module.exports = (description, content, fontSize = '12', spacing = '1.5') => new
     }
 
     // Block has been stored
+    const key = block.cid.toBaseEncodedString()
 
-    logger.debug(block.data.toString())
-    logger.debug(block.cid.toBaseEncodedString())
+    logger.debug(`${key} : ${block.data.toString()}`)
 
-    resolve()
+    // // Try reading the block
+    // ipfs.block.get(key, (err, block) => {
+    //   if (err) {
+    //     reject(err)
+    //   }
+
+    //   logger.debug(`${key} : ${block.data}`)
+    // })
+
+    resolve(key)
   })
 })
 
