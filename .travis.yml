@@ -12,6 +12,7 @@ before_script:
 
 script:
   - yarn lint
+  - yarn test --coverage
   - make build
 
 notifications:
