@@ -2,7 +2,10 @@ const logger = require('./logger.js')
 const mongoose = require('mongoose')
 const database = require('./db.js')
 
-const url = `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_ADDRESS}/${process.env.DATABASE_NAME}`
+let uri = `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_ADDRESS}/${process.env.DATABASE_NAME}`
+if (process.env.DATABASE_OPTIONS && process.env.DATABASE_OPTIONS !== '') {
+  uri += `?${process.env.DATABASE_OPTIONS}`
+}
 
 module.exports = () => new Promise(function (resolve, reject) {
   // schema
@@ -24,7 +27,7 @@ module.exports = () => new Promise(function (resolve, reject) {
   logger.debug('user schema created')
 
   // get connection
-  database(url, process.env.DATABASE_NAME)
+  database(uri, process.env.DATABASE_NAME)
     .then(conn => {
       logger.info(`got connection to ${process.env.DATABASE_NAME}`)
       resolve(conn.model('User'))
