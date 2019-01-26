@@ -44,10 +44,10 @@ require('./sessstore')(session)
             return
           }
 
-          const desc = req.body.desc || null
-          const text = req.body.text || null
-          const fontSize = req.body.fontSize || '12'
-          const spacing = req.body.spacing || '1.5'
+          const desc = req.body.desc || ''
+          const text = req.body.text || ''
+          const fontSize = req.body.fontSize || 12
+          const spacing = req.body.spacing || 1.5
 
           logger.debug(`
             desc=${desc}
