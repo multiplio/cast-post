@@ -2,7 +2,7 @@ const logger = require('./logger.js')
 const mongoose = require('mongoose')
 const database = require('./db.js')
 
-let uri = `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_ADDRESS}/${process.env.DATABASE_NAME}`
+let uri = `${process.env.DATABASE_PROTOCOL}://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_ADDRESS}/${process.env.DATABASE_NAME}`
 if (process.env.DATABASE_OPTIONS && process.env.DATABASE_OPTIONS !== '') {
   uri += `?${process.env.DATABASE_OPTIONS}`
 }
