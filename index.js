@@ -37,25 +37,41 @@ require('./sessstore')(session)
       .then(User => {
         // setup paths
         app.post('/', function (req, res) {
+          // check if authenticated
+          if (req === null || req.session === null || req.session.passport === null) {
+            res
+              .status(401)
+              .send('error : no session found')
+            return
+          }
+
+          // get user
+          const userID = req.session.passport.user
+
+          // check if body present
           if (req === null || req.body === null) {
-            req
+            res
               .status(400)
               .send('error : provide required parameters')
             return
           }
 
+          // get values + defaults
           const desc = req.body.desc || ''
           const text = req.body.text || ''
           const fontSize = req.body.fontSize || 12
           const spacing = req.body.spacing || 1.5
 
-          logger.debug(`
-            desc=${desc}
-            text=${text}
-            fontSize=${fontSize}
-            spacing=${spacing}`)
+          logger.debug(`desc='${desc}' text='${text}' fontSize='${fontSize}' spacing='${spacing}'`)
 
-          post(desc, text, fontSize, spacing)
+          // save to msgstore and route to publishers
+          post(userID,
+            {
+              description: desc,
+              content: text,
+              fontSize,
+              spacing,
+            })
             .then((cid) => logger.info(`post - success : ${cid}`))
             .then(() => {
               res

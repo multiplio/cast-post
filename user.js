@@ -7,17 +7,23 @@ if (process.env.DATABASE_OPTIONS && process.env.DATABASE_OPTIONS !== '') {
   uri += `?${process.env.DATABASE_OPTIONS}`
 }
 
+let model = null
+
 module.exports = () => new Promise(function (resolve, reject) {
+  if (model !== null) {
+    resolve(model)
+  }
+
   // schema
   let userSchema = mongoose.Schema({
     displayName: String,
 
-    twitterId: String,
-    twitterAccessLevel: String,
-
     posts: [
       {
         hash: String,
+        publishers: [
+          { service: String },
+        ],
         date: { type: Date, default: Date.now },
       },
     ],
@@ -30,7 +36,8 @@ module.exports = () => new Promise(function (resolve, reject) {
   database(uri, process.env.DATABASE_NAME)
     .then(conn => {
       logger.info(`got connection to ${process.env.DATABASE_NAME}`)
-      resolve(conn.model('User'))
+      model = conn.model('User')
+      resolve(model)
     })
     .catch(err => {
       logger.error(err)

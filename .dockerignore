@@ -2,6 +2,9 @@
 
 *.log
 
+*.test.js
+__mocks__/
+
 node_modules/
 coverage/
 
