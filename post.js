@@ -35,9 +35,9 @@ module.exports = (userID, post) => new Promise(function (resolve, reject) {
         )
       })
     // route to publishers
-      .then(_ => fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`))
+      .then(() => fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`))
     // return
-      .then(_ => resolve(key))
+      .then(() => resolve(key))
     // errors
       .catch(err => {
         logger.error(err)
