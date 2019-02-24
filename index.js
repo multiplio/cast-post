@@ -38,7 +38,7 @@ require('./sessstore')(session)
         // setup paths
         app.post('/', function (req, res) {
           // check if authenticated
-          if (req === null || req.session === null || req.session.passport === null) {
+          if (!req || !req.session || !req.session.passport) {
             res
               .status(401)
               .send('error : no session found')
