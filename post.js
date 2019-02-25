@@ -5,6 +5,11 @@ const fetch = require('node-fetch')
 const ipfs = require('ipfs-http-client')(process.env.IPFS_ADDRESS, process.env.IPFS_PORT, { protocol: process.env.IPFS_PROTOCOL })
 
 module.exports = (userID, post) => new Promise(function (resolve, reject) {
+  if (!mongoose.Types.ObjectId.isValid(`${userID}`)) {
+    reject(`invalid userID : ${userID}`)
+  }
+  const userOID = new mongoose.Types.ObjectId(idText)
+
   const postString = JSON.stringify(post)
   const buf = Buffer.from(postString, 'utf8')
 
@@ -30,8 +35,8 @@ module.exports = (userID, post) => new Promise(function (resolve, reject) {
     // add post to user
       .then(User => {
         User.update(
-          { _id: userID },
-          { $push: { posts: post } }
+          { "_id": userOID },
+          { "$push": { "posts": post } }
         )
       })
     // route to publishers
