@@ -1,7 +1,8 @@
 const logger = require('./logger')
 
 // app requires
-const users = require('./user')
+const database = require('./db.js')
+const users = require('./user')(database)
 const post = require('./post')
 
 const bodyParser = require('body-parser')
@@ -33,7 +34,7 @@ require('./sessstore')(session)
     ))
 
     // setup users database
-    users()
+    users
       .then(User => {
         // setup paths
         app.post('/', function (req, res) {
