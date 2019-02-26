@@ -3,7 +3,7 @@ const logger = require('./logger')
 // app requires
 const database = require('./db.js')
 const users = require('./user')(database)
-const post = require('./post')
+const postFactory = require('./post')
 
 const bodyParser = require('body-parser')
 const app = require('express')()
@@ -36,6 +36,8 @@ require('./sessstore')(session)
     // setup users database
     users
       .then(User => {
+        const post = postFactory({ User })
+
         // setup paths
         app.post('/', function (req, res) {
           // check if authenticated
