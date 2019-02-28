@@ -1,6 +1,5 @@
 const logger = require('./logger.js')
 const mongoose = require('mongoose')
-const database = require('./db.js')
 
 let uri = `${process.env.DATABASE_PROTOCOL}://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_ADDRESS}/${process.env.DATABASE_NAME}`
 if (process.env.DATABASE_OPTIONS && process.env.DATABASE_OPTIONS !== '') {
@@ -9,7 +8,7 @@ if (process.env.DATABASE_OPTIONS && process.env.DATABASE_OPTIONS !== '') {
 
 let model = null
 
-module.exports = () => new Promise(function (resolve, reject) {
+module.exports = (database) => new Promise(function (resolve, reject) {
   if (model !== null) {
     resolve(model)
   }
