@@ -92,6 +92,12 @@ require('./sessstore')(session)
             })
         })
 
+        // readiness probe
+        app.get('/ready', function (req, res) {
+          res
+            .status(200)
+            .send('ok')
+        })
         // start server
         app.listen(process.env.PORT)
         logger.info(`listening at localhost:${process.env.PORT}`)
