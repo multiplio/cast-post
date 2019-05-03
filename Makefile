@@ -1,5 +1,5 @@
-project=tekwrks
-name=post
+project=multipl
+name=cast-post
 
 .PHONY:build
 build: .image-timestamp

@@ -1,5 +1,5 @@
-# Post content handler
+# post
+Receive, verify and route content to publishers.
 
-[![Build Status](https://travis-ci.org/tekwrks/post.svg?branch=master)](https://travis-ci.org/tekwrks/post)
-[![codecov](https://codecov.io/gh/tekwrks/post/branch/master/graph/badge.svg)](https://codecov.io/gh/tekwrks/post)
+[![Build Status](https://travis-ci.org/multiplio/cast-post.svg?branch=master)](https://travis-ci.org/multiplio/cast-post)
 

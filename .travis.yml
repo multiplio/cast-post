@@ -2,8 +2,8 @@ sudo: required
 
 env:
   global:
-    - PROJECT_NAME=tekwrks
-    - DOCKER_IMAGE_NAME=post
+    - PROJECT_NAME=multipl
+    - DOCKER_IMAGE_NAME=cast-post
 
 language: node_js
 node_js:
@@ -14,8 +14,8 @@ cache:
   directories:
     - "$HOME/google-cloud-sdk/"
 
-install:
-  - npm install -g codecov
+# install:
+#   - npm install -g codecov
 
 services:
   - docker
@@ -23,7 +23,8 @@ services:
 before_script:
   - yarn
   - yarn lint
-  - yarn test --coverage && codecov
+  - yarn test --coverage
+  # - codecov
 
 script:
   - make build
@@ -33,14 +34,20 @@ before_deploy:
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud --quiet version
   - gcloud --quiet components update
-  - git clone https://github.com/tekwrks/MANAGE
+  - git clone https://github.com/multiplio/MANAGE
+  - ./MANAGE/gcloud/auth.sh
 
 deploy:
   - provider: script
-    script: chmod 500 ./MANAGE/gcloud/push.sh && ./MANAGE/gcloud/push.sh
+    script: ./MANAGE/gcloud/push.sh
     skip_cleanup: true
     on:
       branch: master
+  - provider: script
+    script: ./MANAGE/gcloud/push-tag.sh
+    skip_cleanup: true
+    on:
+      tags: true
 
 notifications:
   slack:
