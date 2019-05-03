@@ -34,14 +34,20 @@ before_deploy:
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud --quiet version
   - gcloud --quiet components update
-  - git clone https://github.com/tekwrks/MANAGE
+  - git clone https://github.com/multiplio/MANAGE
+  - ./MANAGE/gcloud/auth.sh
 
 deploy:
   - provider: script
-    script: chmod 500 ./MANAGE/gcloud/push.sh && ./MANAGE/gcloud/push.sh
+    script: ./MANAGE/gcloud/push.sh
     skip_cleanup: true
     on:
       branch: master
+  - provider: script
+    script: ./MANAGE/gcloud/push-tag.sh
+    skip_cleanup: true
+    on:
+      tags: true
 
 notifications:
   slack:
