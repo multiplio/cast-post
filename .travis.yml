@@ -14,8 +14,8 @@ cache:
   directories:
     - "$HOME/google-cloud-sdk/"
 
-install:
-  - npm install -g codecov
+# install:
+#   - npm install -g codecov
 
 services:
   - docker
@@ -23,7 +23,8 @@ services:
 before_script:
   - yarn
   - yarn lint
-  - yarn test --coverage && codecov
+  - yarn test --coverage
+  # - codecov
 
 script:
   - make build
