@@ -2,8 +2,8 @@ sudo: required
 
 env:
   global:
-    - PROJECT_NAME=tekwrks
-    - DOCKER_IMAGE_NAME=post
+    - PROJECT_NAME=multipl
+    - DOCKER_IMAGE_NAME=cast-post
 
 language: node_js
 node_js:
