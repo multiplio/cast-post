@@ -39,7 +39,7 @@ require('./sessstore')(session)
         const post = postFactory({ User })
 
         // setup paths
-        app.post('/', function (req, res) {
+        app.post('/publish', function (req, res) {
           // check if authenticated
           if (!req || !req.session || !req.session.passport) {
             res
