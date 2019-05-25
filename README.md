@@ -8,7 +8,7 @@ Receive, verify and route content to publishers.
 | method | route | success | failure | comment |
 |:---:|:---|:---|:---|---:|
 | GET | /ready | 200 'ok' | - | kubernetes ready probe |
-| POST | / | 200 'ok' | 401 \<error\> \|\| 400 \<error\> \|\| 503 | assumes session cookie present |
+| POST | /publish | 200 'ok' | 401 \<error\> \|\| 400 \<error\> \|\| 503 | assumes session cookie present |
 
 ## format
 Expects request to have the following format:
