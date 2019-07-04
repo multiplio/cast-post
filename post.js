@@ -14,25 +14,24 @@ module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, 
   const postString = JSON.stringify(post)
   const buf = Buffer.from(postString, 'utf8')
 
-  ipfs.block.put(buf, (err, block) => {
-    if (err) {
-      reject(err)
-    }
+  // add to ipfs
+  const put = ipfs.block.put(buf)
+    .then(block => {
+      // block has been stored
+      const key = block.cid.toBaseEncodedString()
+      logger.debug(`${key} : ${block.data.toString()}`)
 
-    // block has been stored
-    const key = block.cid.toBaseEncodedString()
-    logger.debug(`${key} : ${block.data.toString()}`)
-
-    const post = {
-      hash: key,
-      publishers: {
-        service: 'twitter',
-      },
-      date: Date.now(),
-    }
-
-    // add post to user
-    const insert = new Promise(function (resolve, reject) {
+      return key
+    })
+    .then(key => new Promise(function (resolve, reject) {
+      // add post to user
+      const post = {
+        hash: key,
+        publishers: {
+          service: 'twitter',
+        },
+        date: Date.now(),
+      }
       User.updateOne(
         { '_id': userOID },
         { '$push': { 'posts': post } },
@@ -43,15 +42,14 @@ module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, 
           resolve(raw)
         }
       )
-    })
+    }))
 
-    // wait for publish and insert before returning
-    Promise.all([
-      insert,
-      fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`),
-    ])
-      .then(() => resolve(key))
-      .catch(err => reject(err))
-  })
+  // wait for publish and insert before returning
+  Promise.all([
+    put,
+    fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`),
+  ])
+    .then(() => resolve(key))
+    .catch(err => reject(err))
 })
 
