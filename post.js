@@ -27,9 +27,9 @@ module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, 
       // add post to user
       const post = {
         hash: key,
-        publishers: {
-          service: 'twitter',
-        },
+        publishers: [
+          { service: 'twitter' },
+        ],
         date: Date.now(),
       }
       User.updateOne(
