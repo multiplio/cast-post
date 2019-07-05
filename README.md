@@ -16,8 +16,8 @@ Expects request to have the following format:
 {
   text: "Post text.",
   desc: "Post description.",
-  fontSize: "Preffered size of the text.",
-  spacing: "Preffered line spacing.",
+  fontSize: 12,
+  spacing: 1.5,
 }
 ```
 
