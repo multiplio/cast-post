@@ -19,14 +19,16 @@ describe('post', () => {
   jest.setMock('node-fetch', mockFetch)
 
   const blockKey = 'block-key'
-  const mockPut = jest.fn().mockImplementation((buffe, cb) => {
-    cb(null, {
-      cid: {
-        toBaseEncodedString: jest.fn(() => blockKey),
-      },
-      data: {
-        toString: jest.fn(() => "block-data"),
-      },
+  const mockPut = jest.fn().mockImplementation(buffer => {
+    return new Promise((resolve, reject) => {
+      resolve({
+        cid: {
+          toBaseEncodedString: jest.fn(() => blockKey),
+        },
+        data: {
+          toString: jest.fn(() => "block-data"),
+        },
+      })
     })
   })
   jest.setMock('ipfs-http-client', (address, port, { protocol }) => {
@@ -55,8 +57,8 @@ describe('post', () => {
     await expect(m('', {})).rejects.toThrow()
   })
 
-  test('resolves with block key if okay', async () => {
-    await expect(m('', {})).resolves.toBe(blockKey)
+  test('resolves if okay', async () => {
+    await expect(m('', {})).resolves.toBe()
   })
 
   test('rejects on user update failure', async () => {
