@@ -3,7 +3,13 @@ const logger = require('./logger')
 const fetch = require('node-fetch')
 const mongoose = require('mongoose')
 
-const ipfs = require('ipfs-http-client')(process.env.IPFS_ADDRESS, process.env.IPFS_PORT, { protocol: process.env.IPFS_PROTOCOL })
+const ipfs = require('ipfs-http-client')(
+  process.env.IPFS_ADDRESS,
+  process.env.IPFS_PORT,
+  {
+    protocol: process.env.IPFS_PROTOCOL,
+  }
+)
 
 module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, reject) {
   if (!mongoose.Types.ObjectId.isValid(`${userID}`)) {
@@ -15,7 +21,7 @@ module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, 
   const buf = Buffer.from(postString, 'utf8')
 
   // add to ipfs
-  const put = ipfs.block.put(buf)
+  ipfs.block.put(buf)
     .then(block => {
       // block has been stored
       const key = block.cid.toBaseEncodedString()
@@ -39,17 +45,14 @@ module.exports = ({ User }) => (userID, post) => new Promise(function (resolve, 
           if (err !== null) {
             reject(err)
           }
-          resolve(raw)
+          resolve(key)
         }
       )
     }))
-
-  // wait for publish and insert before returning
-  Promise.all([
-    put,
-    fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`),
-  ])
-    .then(() => resolve(key))
+    .then(key =>
+      // publish
+      fetch(`http://${process.env.PUBLISHER_ADDRESS}/twitter/${userID}/${key}`))
+    .then(() => resolve())
     .catch(err => reject(err))
 })
 

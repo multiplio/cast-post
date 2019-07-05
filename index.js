@@ -75,7 +75,7 @@ require('./sessstore')(session)
               fontSize,
               spacing,
             })
-            .then((cid) => logger.info(`post - success : ${cid}`))
+            .then(() => logger.info(`post - success`))
             .then(() => {
               res
                 .status(200)
