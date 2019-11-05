@@ -28,7 +28,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.13.0",
     "ipfs-http-client": "^29.0.0",
-    "mongoose": "^5.4.12",
+    "mongoose": "^5.7.5",
     "node-fetch": "^2.2.0",
     "winston": "^3.0.0"
   },
